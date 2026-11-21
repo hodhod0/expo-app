@@ -176,5 +176,40 @@
     "allow": "Allow camera",
     "openSettings": "Open settings",
     "webNote": "Camera scanning works best in the phone app."
+  },
+  "info": {
+    "openNow": "Open now · closes {{time}}",
+    "closed": "Closed now",
+    "call": "Call",
+    "whatsapp": "WhatsApp",
+    "directions": "Directions",
+    "hours": "Opening hours",
+    "today": "today",
+    "closedDay": "Closed",
+    "wifi": "Free Wi-Fi",
+    "network": "Network: {{name}}",
+    "settings": "Settings",
+    "appearance": "Appearance",
+    "language": "Language",
+    "table": "Table",
+    "noTable": "Not selected",
+    "days": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
+    "themes": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    }
+  },
+  "menu": {
+    "title": "Menu",
+    "subtitle": "Pick a category to see its dishes"
   }
 }
