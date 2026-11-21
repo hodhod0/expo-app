@@ -9,6 +9,8 @@ export type OrderLine = {
   quantity: number;
   note?: string;
   imageUrl?: string;
+  /** Placeholder colour when there is no photo. */
+  tint?: string;
 };
 
 type OrderState = {

@@ -66,6 +66,7 @@ export default function DishScreen() {
       name: dish.name[language],
       unitPrice: dish.price,
       imageUrl: dish.imageUrl,
+      tint: dish.tint,
     });
     setJustAdded(true);
   };

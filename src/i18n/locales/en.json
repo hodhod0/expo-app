@@ -32,7 +32,21 @@
     "total": "Total",
     "showWaiter": "Show to waiter",
     "noPayment": "No payment in the app. Your waiter confirms the order.",
-    "add": "Add to order"
+    "add": "Add to order",
+    "table": "Table {{number}}",
+    "noTable": "No table selected",
+    "itemCount_one": "{{count}} item",
+    "itemCount_other": "{{count}} items",
+    "emptyTitle": "Your order is empty",
+    "emptyText": "Add dishes from the menu, then show this list to your waiter.",
+    "browse": "Browse the menu",
+    "notePlaceholder": "Add a note for the kitchen",
+    "addNote": "Add a note",
+    "clearConfirm": "Tap again to clear",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "waiterTitle": "Show this to your waiter",
+    "close": "Close"
   },
   "favourites": {
     "title": "Favourites",
