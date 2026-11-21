@@ -247,5 +247,25 @@
   "menu": {
     "title": "Menu",
     "subtitle": "Pick a category to see its dishes"
+  },
+  "search": {
+    "placeholder": "Search dishes, drinks…",
+    "clear": "Clear search",
+    "recent": "Recent searches",
+    "clearRecent": "Clear",
+    "remove": "Remove {{query}}",
+    "popular": "Popular right now",
+    "categories": "Categories",
+    "results_one": "{{count}} dish",
+    "results_other": "{{count}} dishes",
+    "noResults": "No dishes found for “{{query}}”",
+    "noResultsHint": "Check the spelling or try another word, like “grill” or “rice”.",
+    "suggestions": [
+      "Shawarma",
+      "Lamb",
+      "Grill",
+      "Burger",
+      "Fish"
+    ]
   }
 }

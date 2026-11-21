@@ -263,5 +263,29 @@
   "menu": {
     "title": "القائمة",
     "subtitle": "اختر فئة لعرض أطباقها"
+  },
+  "search": {
+    "placeholder": "ابحث عن طبق أو مشروب…",
+    "clear": "مسح البحث",
+    "recent": "عمليات البحث الأخيرة",
+    "clearRecent": "مسح",
+    "remove": "إزالة {{query}}",
+    "popular": "الأكثر طلباً الآن",
+    "categories": "الفئات",
+    "results_zero": "لا أطباق",
+    "results_one": "طبق واحد",
+    "results_two": "طبقان",
+    "results_few": "{{count}} أطباق",
+    "results_many": "{{count}} طبقاً",
+    "results_other": "{{count}} طبق",
+    "noResults": "لا توجد أطباق لـ “{{query}}”",
+    "noResultsHint": "تحقّق من الكتابة أو جرّب كلمة أخرى مثل “مشاوي” أو “أرز”.",
+    "suggestions": [
+      "شاورما",
+      "لحم",
+      "مشاوي",
+      "برغر",
+      "سمك"
+    ]
   }
 }
