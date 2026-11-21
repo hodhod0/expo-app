@@ -159,5 +159,22 @@
       "priceLow": "Price: low to high",
       "priceHigh": "Price: high to low"
     }
+  },
+  "scan": {
+    "title": "Scan table QR",
+    "hint": "Point your camera at the QR code\non your table",
+    "manualTitle": "No camera? Enter your table number",
+    "placeholder": "Table no.",
+    "join": "Join table",
+    "browseHint": "You can browse the menu without a table, too.",
+    "close": "Close",
+    "torch": "Flashlight",
+    "notTable": "That QR code isn't a table code",
+    "joined": "You are at table {{number}}",
+    "permissionTitle": "Allow camera access",
+    "permissionText": "We use the camera only to read the QR code on your table.",
+    "allow": "Allow camera",
+    "openSettings": "Open settings",
+    "webNote": "Camera scanning works best in the phone app."
   }
 }
