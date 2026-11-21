@@ -1,56 +1,63 @@
-# Welcome to your Expo app 👋
+# Digital Menu — mobile app
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A restaurant digital menu for iPhone, Android and the web, built with **Expo (React Native) + TypeScript**.
+Guests browse the menu, save favourites, build an order to show the waiter, call the waiter and scan their table's QR code — in **English and Arabic (RTL)**, with **light and dark** themes.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Home with Chef's pick banner and category grid; Menu, Favourites and Info tabs
+- Category dish lists with sub-category chips, dish details with ingredients and allergen warnings
+- My Order: quantities, kitchen notes, totals and a large "show to waiter" view (no payment in the app)
+- Filters: diet, avoided allergens (saved), spice level, price range, sort
+- Call waiter requests, table QR scanning (`expo-camera`) and `digitalmenu://table/<n>` deep links
+- Search across names, descriptions and ingredients, Arabic-aware (ignores tashkeel and hamza forms)
+- Login, Register and Forgot password screens
+- Appearance: Light / Dark / System
 
-   ```bash
-   npm install
-   ```
+## Getting started
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Requires **Node.js 22.13+** (or 24 LTS).
 
 ```bash
-npm run reset-project
+npm install
+cp .env.example .env   # then set your API address and company id
+npx expo start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Open the app with **Expo Go** on your phone (scan the QR code, phone and computer on the same Wi-Fi), or press `w` for the web version.
 
-### Other setup steps
+## Configuration
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+| Variable | Purpose |
+| --- | --- |
+| `EXPO_PUBLIC_API_URL` | bomain API base URL. On a phone use your computer's LAN IP, not `localhost`. |
+| `EXPO_PUBLIC_COMPANY_ID` | Restaurant id (`cp_id`) in the backend. |
 
-## Learn more
+## Project structure
 
-To learn more about developing your project with Expo, look at the following resources:
+```
+src/
+  app/          screens (Expo Router — each file is a route)
+  components/   ui/, menu/, order/, home/, layout/
+  theme/        colour tokens (light/dark), fonts (Latin + Arabic), spacing
+  api/          API client and endpoints
+  hooks/        TanStack Query hooks, RTL helpers
+  store/        Zustand stores (settings, order, favourites, filters, auth, search)
+  i18n/         en.json, ar.json
+  data/         sample menu and restaurant data (used until the API is connected)
+  utils/        filtering, search, opening hours, validation, QR parsing
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Status
 
-## Join the community
+- Menu content currently comes from **sample data** in `src/data/` until the API is connected.
+- **Waiter requests** and **accounts** (sign in / sign up / reset) are **simulated** in `src/api/waiter.ts` and `src/api/auth.ts` until the backend has endpoints for them.
 
-Join our community of developers creating universal apps.
+## Scripts
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npx expo start                  # dev server
+npx tsc --noEmit                # type-check
+npx eslint src                  # lint
+npx expo export --platform web  # static web build in dist/
+```
