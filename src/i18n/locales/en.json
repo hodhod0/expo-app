@@ -50,8 +50,12 @@
   },
   "favourites": {
     "title": "Favourites",
-    "edit": "Edit",
-    "tip": "Show this list to your waiter to order faster."
+    "tip": "Show this list to your waiter to order faster.",
+    "count_one": "{{count}} dish saved for your next visit",
+    "count_other": "{{count}} dishes saved for your next visit",
+    "emptyTitle": "No favourites yet",
+    "emptyText": "Tap the heart on any dish to save it here for your next visit.",
+    "browse": "Browse the menu"
   },
   "auth": {
     "welcomeBack": "Welcome back",
