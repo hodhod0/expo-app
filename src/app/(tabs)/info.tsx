@@ -2,9 +2,11 @@ import { router } from 'expo-router';
 import {
   ChevronLeft,
   ChevronRight,
+  CircleUser,
   Clock,
   Flame,
   Globe,
+  LogOut,
   MapPin,
   MessageCircle,
   Navigation,
@@ -22,6 +24,7 @@ import { AppText } from '@/components/ui/AppText';
 import { restaurant } from '@/data/restaurant';
 import { restaurantName } from '@/data/sample';
 import { useRtl } from '@/hooks/useRtl';
+import { useAuthStore } from '@/store/useAuthStore';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { useTheme } from '@/theme/ThemeProvider';
 import { radius, screenPadding } from '@/theme/spacing';
@@ -145,9 +148,16 @@ function SettingsRows() {
   const language = useSettingsStore((s) => s.language);
   const setLanguage = useSettingsStore((s) => s.setLanguage);
   const table = useSettingsStore((s) => s.tableNumber);
+  const user = useAuthStore((s) => s.user);
+  const signOut = useAuthStore((s) => s.signOut);
 
   return (
     <>
+      {user ? (
+        <InfoRow icon={LogOut} title={t('auth.signedInAs', { name: user.name })} subtitle={user.email} value={t('auth.signOut')} onPress={signOut} />
+      ) : (
+        <InfoRow icon={CircleUser} title={t('auth.account')} value={t('auth.guestAccount')} onPress={() => router.push('/login')} />
+      )}
       <InfoRow
         icon={Palette}
         title={t('info.appearance')}
