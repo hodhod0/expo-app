@@ -4,15 +4,17 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet } from 'react-native';
 
 import { AppText } from '@/components/ui/AppText';
+import { useContentInset } from '@/hooks/useContentInset';
 import { useRtl } from '@/hooks/useRtl';
 import { useTheme } from '@/theme/ThemeProvider';
-import { radius, screenPadding } from '@/theme/spacing';
+import { radius } from '@/theme/spacing';
 
 /** Floating "Call waiter" pill — bottom corner, above the tab bar. */
 export function CallWaiterFab() {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { isRTL, row } = useRtl();
+  const inset = useContentInset();
 
   return (
     <Pressable
@@ -20,7 +22,7 @@ export function CallWaiterFab() {
       onPress={() => router.push('/call-waiter')}
       style={({ pressed }) => [
         styles.fab,
-        isRTL ? { left: screenPadding } : { right: screenPadding },
+        isRTL ? { left: inset } : { right: inset },
         { flexDirection: row, backgroundColor: colors.primary, opacity: pressed ? 0.9 : 1 },
       ]}>
       <BellRing size={18} color={colors.onColor} />

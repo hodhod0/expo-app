@@ -2,13 +2,14 @@ import { router } from 'expo-router';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
 import { sampleMainCategories } from '@/data/sample';
+import { MAX_CONTENT_WIDTH } from '@/hooks/useContentInset';
 import { useRtl } from '@/hooks/useRtl';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { screenPadding } from '@/theme/spacing';
 
 import { CategoryCard } from './CategoryCard';
 
-export const MAX_CONTENT_WIDTH = 560;
+export { MAX_CONTENT_WIDTH };
 const GAP = 12;
 
 /** Two-column grid of main categories (Home and the Menu tab). */

@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/ui/AppText';
+import { useContentInset } from '@/hooks/useContentInset';
 import { useRtl } from '@/hooks/useRtl';
 import { orderTotals, useOrderStore } from '@/store/useOrderStore';
 import { useTheme } from '@/theme/ThemeProvider';
-import { radius, screenPadding } from '@/theme/spacing';
+import { radius } from '@/theme/spacing';
 import { formatPrice } from '@/utils/format';
 
 /** Dark floating bar "4 · View order · $65.50" — only shown when the order has items. */
@@ -14,6 +15,7 @@ export function ViewOrderBar() {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { row } = useRtl();
+  const inset = useContentInset();
   const lines = useOrderStore((s) => s.lines);
   const { itemCount, subtotal } = orderTotals(lines);
 
@@ -25,7 +27,7 @@ export function ViewOrderBar() {
       onPress={() => router.push('/order')}
       style={({ pressed }) => [
         styles.bar,
-        { flexDirection: row, backgroundColor: colors.ink, opacity: pressed ? 0.92 : 1 },
+        { left: inset, right: inset, flexDirection: row, backgroundColor: colors.ink, opacity: pressed ? 0.92 : 1 },
       ]}>
       <View style={[styles.badge, { backgroundColor: colors.primary }]}>
         <AppText variant="bodySmall" weight="bold" color="onColor">
@@ -45,8 +47,6 @@ export function ViewOrderBar() {
 const styles = StyleSheet.create({
   bar: {
     position: 'absolute',
-    left: screenPadding,
-    right: screenPadding,
     bottom: 16,
     height: 56,
     alignItems: 'center',
