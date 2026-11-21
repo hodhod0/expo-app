@@ -1,10 +1,12 @@
 import { router } from 'expo-router';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import { sampleMainCategories } from '@/data/sample';
 import { MAX_CONTENT_WIDTH } from '@/hooks/useContentInset';
 import { useRtl } from '@/hooks/useRtl';
 import { useSettingsStore } from '@/store/useSettingsStore';
+import { listItemEntering } from '@/theme/motion';
 import { screenPadding } from '@/theme/spacing';
 
 import { CategoryCard } from './CategoryCard';
@@ -22,16 +24,17 @@ export function CategoryGrid() {
   // TODO: swap sample data for useMainCategories() once the API (.env) is configured.
   return (
     <View style={[styles.grid, { flexDirection: row }]}>
-      {sampleMainCategories.map((c) => (
-        <CategoryCard
-          key={c.id}
-          title={c.title[language]}
-          count={c.count[language]}
-          tint={c.tint}
-          imageUrl={c.imageUrl}
-          width={cardWidth}
-          onPress={() => router.push(`/category/${c.id}`)}
-        />
+      {sampleMainCategories.map((c, i) => (
+        <Animated.View key={c.id} entering={listItemEntering(i)}>
+          <CategoryCard
+            title={c.title[language]}
+            count={c.count[language]}
+            tint={c.tint}
+            imageUrl={c.imageUrl}
+            width={cardWidth}
+            onPress={() => router.push(`/category/${c.id}`)}
+          />
+        </Animated.View>
       ))}
     </View>
   );

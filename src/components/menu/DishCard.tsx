@@ -1,11 +1,12 @@
 import { Image } from 'expo-image';
-import { Heart, TriangleAlert } from 'lucide-react-native';
+import { TriangleAlert } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/ui/AppText';
+import { HeartButton } from '@/components/ui/HeartButton';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { useRtl } from '@/hooks/useRtl';
-import { useFavouritesStore } from '@/store/useFavouritesStore';
 import { useTheme } from '@/theme/ThemeProvider';
 import { radius } from '@/theme/spacing';
 import { formatPrice } from '@/utils/format';
@@ -28,18 +29,13 @@ export function DishCard({ id, name, description, price, prepMinutes, tint, imag
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { row, start } = useRtl();
-  const saved = useFavouritesStore((s) => s.ids.includes(id));
-  const toggle = useFavouritesStore((s) => s.toggle);
 
   return (
-    <Pressable
+    <PressableScale
       accessibilityRole="button"
       accessibilityLabel={`${name}, ${formatPrice(price)}`}
       onPress={onPress}
-      style={({ pressed }) => [
-        styles.card,
-        { flexDirection: row, backgroundColor: colors.surface, opacity: pressed ? 0.9 : 1 },
-      ]}>
+      style={[styles.card, { flexDirection: row, backgroundColor: colors.surface }]}>
       <View style={[styles.photo, { backgroundColor: tint }]}>
         {imageUrl ? <Image source={imageUrl} style={StyleSheet.absoluteFill} contentFit="cover" /> : null}
       </View>
@@ -66,20 +62,8 @@ export function DishCard({ id, name, description, price, prepMinutes, tint, imag
         </View>
       </View>
 
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={t(saved ? 'category.removeFavourite' : 'category.addFavourite')}
-        accessibilityState={{ selected: saved }}
-        hitSlop={8}
-        onPress={() => toggle(id)}
-        style={[styles.heart, { backgroundColor: colors.bg }]}>
-        <Heart
-          size={18}
-          color={saved ? colors.primary : colors.muted}
-          fill={saved ? colors.primary : 'transparent'}
-        />
-      </Pressable>
-    </Pressable>
+      <HeartButton dishId={id} style={[styles.heart, { backgroundColor: colors.bg }]} />
+    </PressableScale>
   );
 }
 

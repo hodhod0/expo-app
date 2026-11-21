@@ -2,7 +2,8 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Search, SlidersHorizontal } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import { TopBar } from '@/components/layout/TopBar';
 import { DishCard } from '@/components/menu/DishCard';
@@ -15,6 +16,7 @@ import { useRtl } from '@/hooks/useRtl';
 import { activeFilterCount, useFilterStore } from '@/store/useFilterStore';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { useTheme } from '@/theme/ThemeProvider';
+import { listItemEntering } from '@/theme/motion';
 import { screenPadding } from '@/theme/spacing';
 import { filterDishes } from '@/utils/filterDishes';
 
@@ -78,7 +80,8 @@ export default function CategoryScreen() {
           </Pressable>
         </View>
 
-        <FlatList
+        <Animated.FlatList
+          key={filter}
           data={dishes}
           keyExtractor={(d) => d.id}
           style={styles.list}
@@ -89,18 +92,20 @@ export default function CategoryScreen() {
               {t('category.empty')}
             </AppText>
           }
-          renderItem={({ item }) => (
-            <DishCard
-              id={item.id}
-              name={item.name[language]}
-              description={item.description[language]}
-              price={item.price}
-              prepMinutes={item.prepMinutes}
-              tint={item.tint}
-              imageUrl={item.imageUrl}
-              warning={item.allergens.some((a) => allergies.includes(a))}
-              onPress={() => router.push(`/dish/${item.id}`)}
-            />
+          renderItem={({ item, index }) => (
+            <Animated.View entering={listItemEntering(index)}>
+              <DishCard
+                id={item.id}
+                name={item.name[language]}
+                description={item.description[language]}
+                price={item.price}
+                prepMinutes={item.prepMinutes}
+                tint={item.tint}
+                imageUrl={item.imageUrl}
+                warning={item.allergens.some((a) => allergies.includes(a))}
+                onPress={() => router.push(`/dish/${item.id}`)}
+              />
+            </Animated.View>
           )}
         />
       </Screen>

@@ -1,7 +1,8 @@
 import { Image } from 'expo-image';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/ui/AppText';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { useRtl } from '@/hooks/useRtl';
 import { useTheme } from '@/theme/ThemeProvider';
 import { radius } from '@/theme/spacing';
@@ -21,14 +22,11 @@ export function CategoryCard({ title, count, tint, imageUrl, width, onPress }: P
   const { start } = useRtl();
 
   return (
-    <Pressable
+    <PressableScale
       accessibilityRole="button"
       accessibilityLabel={`${title}, ${count}`}
       onPress={onPress}
-      style={({ pressed }) => [
-        styles.card,
-        { width, backgroundColor: colors.surface, opacity: pressed ? 0.85 : 1 },
-      ]}>
+      style={[styles.card, { width, backgroundColor: colors.surface }]}>
       <View style={[styles.photo, { backgroundColor: tint }]}>
         {imageUrl ? <Image source={imageUrl} style={StyleSheet.absoluteFill} contentFit="cover" /> : null}
       </View>
@@ -40,7 +38,7 @@ export function CategoryCard({ title, count, tint, imageUrl, width, onPress }: P
           {count}
         </AppText>
       </View>
-    </Pressable>
+    </PressableScale>
   );
 }
 

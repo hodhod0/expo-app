@@ -2,7 +2,8 @@ import { router } from 'expo-router';
 import { Heart, Info } from 'lucide-react-native';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import Animated, { ZoomIn } from 'react-native-reanimated';
 
 import { DishCard } from '@/components/menu/DishCard';
 import { ViewOrderBar } from '@/components/order/ViewOrderBar';
@@ -14,6 +15,7 @@ import { useRtl } from '@/hooks/useRtl';
 import { useFavouritesStore } from '@/store/useFavouritesStore';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { useTheme } from '@/theme/ThemeProvider';
+import { listItemEntering } from '@/theme/motion';
 import { radius, screenPadding } from '@/theme/spacing';
 
 /** 04 · Favourites — saved dishes, newest first. Tapping a heart removes it. */
@@ -40,9 +42,9 @@ export default function FavouritesScreen() {
       <Screen contentStyle={styles.content}>
         <AppText variant="display">{t('favourites.title')}</AppText>
         <View style={styles.empty}>
-          <View style={[styles.emptyIcon, { backgroundColor: colors.primarySoft }]}>
+          <Animated.View entering={ZoomIn.springify()} style={[styles.emptyIcon, { backgroundColor: colors.primarySoft }]}>
             <Heart size={32} color={colors.primary} />
-          </View>
+          </Animated.View>
           <AppText variant="title" style={styles.center}>
             {t('favourites.emptyTitle')}
           </AppText>
@@ -58,7 +60,7 @@ export default function FavouritesScreen() {
   return (
     <View style={styles.root}>
       <Screen contentStyle={[styles.content, { paddingBottom: 0 }]}>
-        <FlatList
+        <Animated.FlatList
           data={dishes}
           keyExtractor={(d) => d.id}
           style={styles.list}
@@ -80,18 +82,20 @@ export default function FavouritesScreen() {
               </View>
             </View>
           }
-          renderItem={({ item }) => (
-            <DishCard
-              id={item.id}
-              name={item.name[language]}
-              description={item.description[language]}
-              price={item.price}
-              prepMinutes={item.prepMinutes}
-              tint={item.tint}
-              imageUrl={item.imageUrl}
-              warning={item.allergens.some((a) => allergies.includes(a))}
-              onPress={() => router.push(`/dish/${item.id}`)}
-            />
+          renderItem={({ item, index }) => (
+            <Animated.View entering={listItemEntering(index)}>
+              <DishCard
+                id={item.id}
+                name={item.name[language]}
+                description={item.description[language]}
+                price={item.price}
+                prepMinutes={item.prepMinutes}
+                tint={item.tint}
+                imageUrl={item.imageUrl}
+                warning={item.allergens.some((a) => allergies.includes(a))}
+                onPress={() => router.push(`/dish/${item.id}`)}
+              />
+            </Animated.View>
           )}
         />
       </Screen>

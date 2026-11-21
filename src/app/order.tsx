@@ -3,6 +3,7 @@ import { Info, Plus, ShoppingBag, Utensils } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import Animated, { FadeOutLeft, FadeOutRight, ZoomIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { TopBar } from '@/components/layout/TopBar';
@@ -15,6 +16,7 @@ import { useRtl } from '@/hooks/useRtl';
 import { orderTotals, useOrderStore, type OrderLine } from '@/store/useOrderStore';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { useTheme } from '@/theme/ThemeProvider';
+import { layoutTransition, listItemEntering, nativeOnly } from '@/theme/motion';
 import { radius, screenPadding } from '@/theme/spacing';
 import { formatPrice } from '@/utils/format';
 
@@ -22,7 +24,7 @@ import { formatPrice } from '@/utils/format';
 export default function OrderScreen() {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const { row, start } = useRtl();
+  const { isRTL, row, start } = useRtl();
   const insets = useSafeAreaInsets();
   const lines = useOrderStore((s) => s.lines);
   const clear = useOrderStore((s) => s.clear);
@@ -56,9 +58,9 @@ export default function OrderScreen() {
       <Screen contentStyle={styles.content}>
         <TopBar title={t('order.title')} />
         <View style={styles.empty}>
-          <View style={[styles.emptyIcon, { backgroundColor: colors.primarySoft }]}>
+          <Animated.View entering={ZoomIn.springify()} style={[styles.emptyIcon, { backgroundColor: colors.primarySoft }]}>
             <ShoppingBag size={32} color={colors.primary} />
-          </View>
+          </Animated.View>
           <AppText variant="title" style={styles.center}>
             {t('order.emptyTitle')}
           </AppText>
@@ -93,21 +95,31 @@ export default function OrderScreen() {
             </View>
           </View>
 
-          {lines.map((line) => (
-            <OrderItem key={line.itemId} line={line} />
+          {lines.map((line, i) => (
+            <Animated.View
+              key={line.itemId}
+              entering={nativeOnly(listItemEntering(i))}
+              exiting={nativeOnly(isRTL ? FadeOutRight.duration(220) : FadeOutLeft.duration(220))}
+              layout={layoutTransition}>
+              <OrderItem line={line} />
+            </Animated.View>
           ))}
 
-          <Pressable
-            accessibilityRole="button"
-            onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
-            style={[styles.addMore, { flexDirection: row, borderColor: colors.primary }]}>
-            <Plus size={18} color={colors.primary} />
-            <AppText variant="bodySmall" weight="semibold" color="primary">
-              {t('order.addMore')}
-            </AppText>
-          </Pressable>
+          <Animated.View layout={layoutTransition}>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
+              style={[styles.addMore, { flexDirection: row, borderColor: colors.primary }]}>
+              <Plus size={18} color={colors.primary} />
+              <AppText variant="bodySmall" weight="semibold" color="primary">
+                {t('order.addMore')}
+              </AppText>
+            </Pressable>
+          </Animated.View>
 
-          <OrderSummary subtotal={totals.subtotal} service={totals.service} total={totals.total} />
+          <Animated.View layout={layoutTransition}>
+            <OrderSummary subtotal={totals.subtotal} service={totals.service} total={totals.total} />
+          </Animated.View>
         </ScrollView>
       </Screen>
 

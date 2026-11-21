@@ -2,7 +2,8 @@ import { router } from 'expo-router';
 import { ChevronLeft, ChevronRight, Clock, Search, SearchX, X } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import Animated, { ZoomIn } from 'react-native-reanimated';
 
 import { DishCard } from '@/components/menu/DishCard';
 import { ViewOrderBar } from '@/components/order/ViewOrderBar';
@@ -15,6 +16,7 @@ import { useRtl } from '@/hooks/useRtl';
 import { useSearchStore } from '@/store/useSearchStore';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { useTheme } from '@/theme/ThemeProvider';
+import { listItemEntering } from '@/theme/motion';
 import { radius, screenPadding } from '@/theme/spacing';
 import { searchCategories, searchDishes } from '@/utils/search';
 
@@ -130,7 +132,7 @@ export default function SearchScreen() {
           </View>
         </View>
 
-        <FlatList
+        <Animated.FlatList
           data={hasQuery ? dishes : []}
           keyExtractor={(d) => d.id}
           style={styles.list}
@@ -142,9 +144,9 @@ export default function SearchScreen() {
           ListEmptyComponent={
             hasQuery && categories.length === 0 ? (
               <View style={styles.empty}>
-                <View style={[styles.emptyIcon, { backgroundColor: colors.primarySoft }]}>
+                <Animated.View entering={ZoomIn.springify()} style={[styles.emptyIcon, { backgroundColor: colors.primarySoft }]}>
                   <SearchX size={30} color={colors.primary} />
-                </View>
+                </Animated.View>
                 <AppText variant="heading" style={styles.center}>
                   {t('search.noResults', { query: query.trim() })}
                 </AppText>
@@ -154,21 +156,23 @@ export default function SearchScreen() {
               </View>
             ) : undefined
           }
-          renderItem={({ item }) => (
-            <DishCard
-              id={item.id}
-              name={item.name[language]}
-              description={item.description[language]}
-              price={item.price}
-              prepMinutes={item.prepMinutes}
-              tint={item.tint}
-              imageUrl={item.imageUrl}
-              warning={item.allergens.some((a) => allergies.includes(a))}
-              onPress={() => {
-                addRecent(query);
-                router.push(`/dish/${item.id}`);
-              }}
-            />
+          renderItem={({ item, index }) => (
+            <Animated.View entering={listItemEntering(index)}>
+              <DishCard
+                id={item.id}
+                name={item.name[language]}
+                description={item.description[language]}
+                price={item.price}
+                prepMinutes={item.prepMinutes}
+                tint={item.tint}
+                imageUrl={item.imageUrl}
+                warning={item.allergens.some((a) => allergies.includes(a))}
+                onPress={() => {
+                  addRecent(query);
+                  router.push(`/dish/${item.id}`);
+                }}
+              />
+            </Animated.View>
           )}
         />
       </Screen>

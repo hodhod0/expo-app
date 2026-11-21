@@ -13,13 +13,23 @@ import {
 } from 'lucide-react-native';
 import { useEffect, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import Animated, {
+  Extrapolation,
+  FadeIn,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { PlaceholderScreen } from '@/components/layout/PlaceholderScreen';
 import { AllergenWarning } from '@/components/menu/AllergenWarning';
 import { AppText } from '@/components/ui/AppText';
 import { Chip } from '@/components/ui/Chip';
+import { HeartButton } from '@/components/ui/HeartButton';
+import { PressableScale } from '@/components/ui/PressableScale';
 import { allergenNames, getSampleDish } from '@/data/sample';
 import { useRtl } from '@/hooks/useRtl';
 import { useFavouritesStore } from '@/store/useFavouritesStore';
@@ -52,6 +62,21 @@ export default function DishScreen() {
     return () => clearTimeout(timer);
   }, [justAdded]);
 
+  // Parallax photo: moves at half speed when scrolling up, stretches when pulling down.
+  const scrollY = useSharedValue(0);
+  const onScroll = useAnimatedScrollHandler((e) => {
+    scrollY.set(e.contentOffset.y);
+  });
+  const photoStyle = useAnimatedStyle(() => {
+    const y = scrollY.get();
+    return {
+      transform: [
+        { translateY: interpolate(y, [-PHOTO_HEIGHT, 0, PHOTO_HEIGHT], [-PHOTO_HEIGHT / 2, 0, PHOTO_HEIGHT / 2]) },
+        { scale: interpolate(y, [-PHOTO_HEIGHT, 0], [2, 1], Extrapolation.CLAMP) },
+      ],
+    };
+  });
+
   // TODO: load from the API once configured.
   const dish = getSampleDish(id);
   if (!dish) return <PlaceholderScreen title={t('dish.notFound')} figma="03 · Dish Details" />;
@@ -73,10 +98,14 @@ export default function DishScreen() {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.bg }]}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 + insets.bottom }}>
-        <View style={[styles.photo, { backgroundColor: dish.tint }]}>
+      <Animated.ScrollView
+        onScroll={onScroll}
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 120 + insets.bottom }}>
+        <Animated.View style={[styles.photo, { backgroundColor: dish.tint }, photoStyle]}>
           {dish.imageUrl ? <Image source={dish.imageUrl} style={StyleSheet.absoluteFill} contentFit="cover" /> : null}
-        </View>
+        </Animated.View>
 
         <View style={[styles.sheet, { backgroundColor: colors.bg }]}>
           {dish.tags?.length ? (
@@ -141,7 +170,7 @@ export default function DishScreen() {
             </View>
           ) : null}
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
 
       {/* Floating buttons over the photo */}
       <View style={[styles.photoButtons, { top: insets.top + 12, flexDirection: row }]}>
@@ -166,29 +195,23 @@ export default function DishScreen() {
             borderTopColor: colors.line,
           },
         ]}>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={t(saved ? 'category.removeFavourite' : 'category.addFavourite')}
-          onPress={() => toggleFavourite(dish.id)}
-          style={[styles.favButton, { backgroundColor: colors.surface, borderColor: colors.line }]}>
-          <Heart size={22} color={colors.primary} fill={saved ? colors.primary : 'transparent'} />
-        </Pressable>
-        <Pressable
+        <HeartButton
+          dishId={dish.id}
+          size={22}
+          mutedOutline={false}
+          style={[styles.favButton, { backgroundColor: colors.surface, borderColor: colors.line }]}
+        />
+        <PressableScale
           accessibilityRole="button"
           onPress={onAdd}
-          style={({ pressed }) => [
-            styles.addButton,
-            {
-              flexDirection: row,
-              backgroundColor: justAdded ? colors.accent : colors.primary,
-              opacity: pressed ? 0.9 : 1,
-            },
-          ]}>
-          {justAdded ? <Check size={20} color={colors.onColor} /> : <ShoppingBag size={20} color={colors.onColor} />}
-          <AppText variant="subheading" color="onColor">
-            {justAdded ? t('dish.added') : t('dish.addToOrder', { price: formatPrice(dish.price) })}
-          </AppText>
-        </Pressable>
+          style={[styles.addButton, { backgroundColor: justAdded ? colors.accent : colors.primary }]}>
+          <Animated.View key={String(justAdded)} entering={FadeIn.duration(200)} style={[styles.addContent, { flexDirection: row }]}>
+            {justAdded ? <Check size={20} color={colors.onColor} /> : <ShoppingBag size={20} color={colors.onColor} />}
+            <AppText variant="subheading" color="onColor">
+              {justAdded ? t('dish.added') : t('dish.addToOrder', { price: formatPrice(dish.price) })}
+            </AppText>
+          </Animated.View>
+        </PressableScale>
       </View>
     </View>
   );
@@ -290,6 +313,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  addContent: { alignItems: 'center', gap: 8 },
   addButton: {
     flex: 1,
     height: 56,

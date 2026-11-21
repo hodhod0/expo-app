@@ -12,6 +12,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppText } from '@/components/ui/AppText';
@@ -104,7 +105,7 @@ export default function ScanScreen() {
               <Corner
                 style={{ bottom: 0, right: 0, borderBottomWidth: 5, borderRightWidth: 5, borderBottomRightRadius: 18 }}
               />
-              <View style={[styles.scanLine, { backgroundColor: colors.primary }]} />
+              <ScanLine color={colors.primary} />
             </View>
             <AppText style={[styles.hint, { color: error ? colors.gold : WHITE }]}>{error ?? t('scan.hint')}</AppText>
             {Platform.OS === 'web' && (
@@ -179,6 +180,16 @@ export default function ScanScreen() {
   );
 }
 
+/** Orange line that sweeps up and down inside the viewfinder (still when Reduce Motion is on). */
+function ScanLine({ color }: { color: string }) {
+  const y = useSharedValue(24);
+  useEffect(() => {
+    y.set(withRepeat(withTiming(FRAME - 24, { duration: 1700, easing: Easing.inOut(Easing.quad) }), -1, true));
+  }, [y]);
+  const style = useAnimatedStyle(() => ({ transform: [{ translateY: y.get() }] }));
+  return <Animated.View style={[styles.scanLine, { backgroundColor: color }, style]} />;
+}
+
 function Corner({ style }: { style: object }) {
   return <View style={[styles.corner, style]} />;
 }
@@ -214,7 +225,7 @@ const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 14, paddingHorizontal: screenPadding },
   frame: { width: FRAME, height: FRAME, marginBottom: 12 },
   corner: { position: 'absolute', width: 46, height: 46, borderColor: WHITE },
-  scanLine: { position: 'absolute', top: FRAME / 2, left: 20, right: 20, height: 3, borderRadius: 2 },
+  scanLine: { position: 'absolute', top: 0, left: 20, right: 20, height: 3, borderRadius: 2 },
   hint: { textAlign: 'center', lineHeight: 22 },
   permIcon: { width: 72, height: 72, borderRadius: 36, alignItems: 'center', justifyContent: 'center' },
   permButton: { alignSelf: 'stretch', marginTop: 8 },

@@ -3,6 +3,7 @@ import { BellRing, Check, Droplet, QrCode, ReceiptText, Sparkles, Utensils, type
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import Animated, { FadeInUp, ZoomIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { sendWaiterRequest, type WaiterRequestType } from '@/api/waiter';
@@ -49,15 +50,17 @@ export default function CallWaiterSheet() {
   if (status === 'sent') {
     return (
       <View style={[styles.root, styles.sent, { backgroundColor: colors.bg }]}>
-        <View style={[styles.sentIcon, { backgroundColor: colors.accent }]}>
+        <Animated.View entering={ZoomIn.springify().damping(9)} style={[styles.sentIcon, { backgroundColor: colors.accent }]}>
           <Check size={36} color={colors.onColor} strokeWidth={2.5} />
-        </View>
-        <AppText variant="title" style={styles.center}>
-          {t('waiter.onTheWay')}
-        </AppText>
-        <AppText color="muted" style={styles.center}>
-          {table ? t('waiter.eta', { table }) : t('waiter.etaNoTable')}
-        </AppText>
+        </Animated.View>
+        <Animated.View entering={FadeInUp.delay(150).duration(300)} style={styles.sentText}>
+          <AppText variant="title" style={styles.center}>
+            {t('waiter.onTheWay')}
+          </AppText>
+          <AppText color="muted" style={styles.center}>
+            {table ? t('waiter.eta', { table }) : t('waiter.etaNoTable')}
+          </AppText>
+        </Animated.View>
       </View>
     );
   }
@@ -157,5 +160,6 @@ const styles = StyleSheet.create({
   footer: { paddingHorizontal: screenPadding, paddingTop: 8 },
   sent: { alignItems: 'center', justifyContent: 'center', gap: 12, padding: screenPadding },
   sentIcon: { width: 80, height: 80, borderRadius: 40, alignItems: 'center', justifyContent: 'center', marginBottom: 8 },
+  sentText: { gap: 12, alignItems: 'center' },
   center: { textAlign: 'center' },
 });
