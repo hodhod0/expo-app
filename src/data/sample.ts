@@ -46,6 +46,10 @@ export type Dish = {
   allergens: string[];
   ingredients?: Localized[];
   tags?: ('chefsPick' | 'spicy' | 'vegetarian')[];
+  /** Diet labels used by the Filters sheet. */
+  diets?: ('vegetarian' | 'vegan' | 'glutenFree' | 'halal' | 'dairyFree')[];
+  /** 0 = not spicy, 1 = mild, 2 = medium, 3 = hot. */
+  spice?: 0 | 1 | 2 | 3;
   tint: string;
   imageUrl?: string;
 };
@@ -62,6 +66,8 @@ export const sampleSubCategories: Record<string, SubCategory[]> = {
 export const sampleDishes: Dish[] = [
   {
     id: 'mixed-grill',
+    diets: ['halal', 'glutenFree'],
+    spice: 2,
     mainCategoryId: 'mains',
     subCategoryId: 'grills',
     name: { en: 'Mixed Grill Platter', ar: 'طبق مشاوي مشكّل' },
@@ -86,6 +92,8 @@ export const sampleDishes: Dish[] = [
   },
   {
     id: 'lamb-ouzi',
+    diets: ['halal', 'glutenFree'],
+    spice: 1,
     mainCategoryId: 'mains',
     subCategoryId: 'rice',
     name: { en: 'Lamb Ouzi', ar: 'أوزي لحم' },
@@ -112,6 +120,8 @@ export const sampleDishes: Dish[] = [
   },
   {
     id: 'sea-bass',
+    diets: ['halal', 'glutenFree', 'dairyFree'],
+    spice: 0,
     mainCategoryId: 'mains',
     subCategoryId: 'seafood',
     name: { en: 'Grilled Sea Bass', ar: 'سمك قاروص مشوي' },
@@ -129,6 +139,8 @@ export const sampleDishes: Dish[] = [
   },
   {
     id: 'shawarma-plate',
+    diets: ['halal', 'dairyFree'],
+    spice: 1,
     mainCategoryId: 'mains',
     subCategoryId: 'grills',
     name: { en: 'Chicken Shawarma Plate', ar: 'صحن شاورما دجاج' },
@@ -146,6 +158,8 @@ export const sampleDishes: Dish[] = [
   },
   {
     id: 'beef-burger',
+    diets: ['halal'],
+    spice: 0,
     mainCategoryId: 'mains',
     subCategoryId: 'burgers',
     name: { en: 'Smoked Beef Burger', ar: 'برغر لحم مدخّن' },

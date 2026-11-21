@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Heart } from 'lucide-react-native';
+import { Heart, TriangleAlert } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -18,11 +18,13 @@ type Props = {
   prepMinutes?: number;
   tint: string;
   imageUrl?: string;
+  /** Contains an allergen the guest asked to avoid. */
+  warning?: boolean;
   onPress: () => void;
 };
 
 /** Figma "Dish Card": photo, name, short description, price, prep time, favourite heart. */
-export function DishCard({ id, name, description, price, prepMinutes, tint, imageUrl, onPress }: Props) {
+export function DishCard({ id, name, description, price, prepMinutes, tint, imageUrl, warning, onPress }: Props) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { row, start } = useRtl();
@@ -43,9 +45,12 @@ export function DishCard({ id, name, description, price, prepMinutes, tint, imag
       </View>
 
       <View style={[styles.info, { alignItems: start }]}>
-        <AppText variant="subheading" numberOfLines={1}>
-          {name}
-        </AppText>
+        <View style={[styles.nameRow, { flexDirection: row }]}>
+          {warning ? <TriangleAlert size={15} color={colors.primary} accessibilityLabel="Allergen warning" /> : null}
+          <AppText variant="subheading" numberOfLines={1} style={styles.name}>
+            {name}
+          </AppText>
+        </View>
         <AppText variant="caption" weight="regular" color="muted" numberOfLines={2} style={styles.desc}>
           {description}
         </AppText>
@@ -82,6 +87,8 @@ const styles = StyleSheet.create({
   card: { alignItems: 'center', gap: 14, padding: 12, borderRadius: radius.lg },
   photo: { width: 84, height: 84, borderRadius: radius.md, overflow: 'hidden' },
   info: { flex: 1, gap: 4 },
+  nameRow: { alignItems: 'center', gap: 6, alignSelf: 'stretch' },
+  name: { flexShrink: 1 },
   desc: { lineHeight: 18 },
   meta: { alignItems: 'center', gap: 8, paddingTop: 2 },
   heart: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },

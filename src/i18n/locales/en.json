@@ -21,7 +21,12 @@
     "clean": "Clean the table",
     "note": "Add a note (optional)",
     "send": "Send request",
-    "onTheWay": "Waiter is on the way"
+    "onTheWay": "Waiter is on the way",
+    "noTable": "No table selected",
+    "scanTable": "Scan your table",
+    "sending": "Sending…",
+    "eta": "Table {{table}} · about 2 min",
+    "etaNoTable": "About 2 min"
   },
   "order": {
     "title": "My order",
@@ -108,5 +113,51 @@
     "addToOrder": "Add to order · {{price}}",
     "added": "Added to your order",
     "notFound": "Dish not found"
+  },
+  "filters": {
+    "title": "Filters",
+    "reset": "Reset",
+    "diet": "Diet",
+    "allergens": "Avoid allergens",
+    "allergensHint": "We'll warn you on dishes that contain them",
+    "spice": "Spice level",
+    "price": "Price",
+    "sort": "Sort by",
+    "show_one": "Show {{count}} dish",
+    "show_other": "Show {{count}} dishes",
+    "showNone": "No dishes match",
+    "diets": {
+      "vegetarian": "Vegetarian",
+      "vegan": "Vegan",
+      "glutenFree": "Gluten-free",
+      "halal": "Halal",
+      "dairyFree": "Dairy-free"
+    },
+    "allergenNames": {
+      "nuts": "Nuts",
+      "dairy": "Dairy",
+      "gluten": "Gluten",
+      "eggs": "Eggs",
+      "shellfish": "Shellfish",
+      "sesame": "Sesame",
+      "fish": "Fish"
+    },
+    "spiceLevels": {
+      "any": "Any",
+      "mild": "Mild",
+      "medium": "Medium",
+      "hot": "Hot"
+    },
+    "prices": {
+      "any": "Any",
+      "under10": "Under 0",
+      "10to20": "0 – 0",
+      "over20": "Over 0"
+    },
+    "sorts": {
+      "popular": "Popular",
+      "priceLow": "Price: low to high",
+      "priceHigh": "Price: high to low"
+    }
   }
 }

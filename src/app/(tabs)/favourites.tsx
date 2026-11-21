@@ -23,6 +23,7 @@ export default function FavouritesScreen() {
   const { row, start } = useRtl();
   const language = useSettingsStore((s) => s.language);
   const ids = useFavouritesStore((s) => s.ids);
+  const allergies = useSettingsStore((s) => s.allergies);
 
   // TODO: look dishes up from the API once configured; unknown ids are skipped.
   const dishes = useMemo(
@@ -88,6 +89,7 @@ export default function FavouritesScreen() {
               prepMinutes={item.prepMinutes}
               tint={item.tint}
               imageUrl={item.imageUrl}
+              warning={item.allergens.some((a) => allergies.includes(a))}
               onPress={() => router.push(`/dish/${item.id}`)}
             />
           )}

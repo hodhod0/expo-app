@@ -17,6 +17,7 @@ type SettingsState = {
   setLanguage: (language: Language) => void;
   setTableNumber: (table: string | null) => void;
   toggleAllergy: (allergen: string) => void;
+  clearAllergies: () => void;
   completeOnboarding: () => void;
 };
 
@@ -37,6 +38,7 @@ export const useSettingsStore = create<SettingsState>()(
             ? s.allergies.filter((a) => a !== allergen)
             : [...s.allergies, allergen],
         })),
+      clearAllergies: () => set({ allergies: [] }),
       completeOnboarding: () => set({ hasSeenOnboarding: true }),
     }),
     { name: 'settings', storage: createJSONStorage(() => AsyncStorage) },

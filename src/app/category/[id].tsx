@@ -1,8 +1,8 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { Search } from 'lucide-react-native';
+import { Search, SlidersHorizontal } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
+import { FlatList, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { TopBar } from '@/components/layout/TopBar';
 import { DishCard } from '@/components/menu/DishCard';
@@ -12,8 +12,11 @@ import { Chip } from '@/components/ui/Chip';
 import { Screen } from '@/components/ui/Screen';
 import { getSampleDishes, sampleMainCategories, sampleSubCategories } from '@/data/sample';
 import { useRtl } from '@/hooks/useRtl';
+import { activeFilterCount, useFilterStore } from '@/store/useFilterStore';
 import { useSettingsStore } from '@/store/useSettingsStore';
+import { useTheme } from '@/theme/ThemeProvider';
 import { screenPadding } from '@/theme/spacing';
+import { filterDishes } from '@/utils/filterDishes';
 
 const ALL = 'all';
 
@@ -21,17 +24,22 @@ const ALL = 'all';
 export default function CategoryScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useTranslation();
-  const { row, start } = useRtl();
+  const { row } = useRtl();
+  const { colors } = useTheme();
   const language = useSettingsStore((s) => s.language);
   const [filter, setFilter] = useState(ALL);
 
   // TODO: replace sample data with useCategories() / useItems() once the API is configured.
   const category = sampleMainCategories.find((c) => c.id === id);
   const subCategories = sampleSubCategories[id] ?? [];
+  const filters = useFilterStore();
+  const allergies = useSettingsStore((s) => s.allergies);
+  const activeFilters = activeFilterCount(filters);
   const dishes = useMemo(() => {
     const all = getSampleDishes(id);
-    return filter === ALL ? all : all.filter((d) => d.subCategoryId === filter);
-  }, [id, filter]);
+    const bySub = filter === ALL ? all : all.filter((d) => d.subCategoryId === filter);
+    return filterDishes(bySub, filters);
+  }, [id, filter, filters]);
 
   return (
     <View style={styles.root}>
@@ -54,10 +62,20 @@ export default function CategoryScreen() {
           </ScrollView>
         )}
 
-        <View style={{ alignItems: start }}>
+        <View style={[styles.countRow, { flexDirection: row }]}>
           <AppText variant="caption" color="muted">
             {t('category.dishCount', { count: dishes.length })}
           </AppText>
+          <Pressable
+            accessibilityRole="button"
+            hitSlop={8}
+            onPress={() => router.push('/filters')}
+            style={[styles.filterLink, { flexDirection: row }]}>
+            <SlidersHorizontal size={14} color={colors.primary} />
+            <AppText variant="caption" weight="semibold" color="primary">
+              {activeFilters > 0 ? `${t('filters.title')} (${activeFilters})` : t('filters.title')}
+            </AppText>
+          </Pressable>
         </View>
 
         <FlatList
@@ -80,6 +98,7 @@ export default function CategoryScreen() {
               prepMinutes={item.prepMinutes}
               tint={item.tint}
               imageUrl={item.imageUrl}
+              warning={item.allergens.some((a) => allergies.includes(a))}
               onPress={() => router.push(`/dish/${item.id}`)}
             />
           )}
@@ -98,4 +117,6 @@ const styles = StyleSheet.create({
   list: { flex: 1, marginHorizontal: -screenPadding },
   listContent: { gap: 12, paddingHorizontal: screenPadding, paddingBottom: 96 },
   empty: { textAlign: 'center', paddingVertical: 40 },
+  countRow: { alignItems: 'center', justifyContent: 'space-between' },
+  filterLink: { alignItems: 'center', gap: 6 },
 });
