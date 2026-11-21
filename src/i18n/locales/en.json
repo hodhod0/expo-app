@@ -1,10 +1,94 @@
 {
-  "tabs": { "home": "Home", "menu": "Menu", "favourites": "Favourites", "info": "Info" },
-  "home": { "welcome": "Welcome to", "search": "Search dishes, drinks…", "explore": "Explore the menu", "seeAll": "See all", "chefsPick": "CHEF'S PICK", "viewDish": "View dish" },
-  "waiter": { "call": "Call waiter", "title": "How can we help?", "bill": "Bring the bill", "water": "Water, please", "clean": "Clean the table", "note": "Add a note (optional)", "send": "Send request", "onTheWay": "Waiter is on the way" },
-  "order": { "title": "My order", "clear": "Clear", "addMore": "Add more dishes", "subtotal": "Subtotal", "service": "Service (10%)", "total": "Total", "showWaiter": "Show to waiter", "noPayment": "No payment in the app. Your waiter confirms the order.", "add": "Add to order" },
-  "favourites": { "title": "Favourites", "edit": "Edit", "tip": "Show this list to your waiter to order faster." },
-  "auth": { "welcomeBack": "Welcome back", "signIn": "Sign in", "signUp": "Sign up", "createAccount": "Create account", "guest": "Continue as guest", "email": "Email", "password": "Password", "fullName": "Full name", "phone": "Phone number", "forgot": "Forgot password?", "remember": "Remember me" },
-  "appearance": { "title": "Appearance", "subtitle": "Choose how the menu looks", "light": "Light", "dark": "Dark", "system": "System", "systemHint": "System follows your phone's dark mode setting.", "done": "Done" },
-  "common": { "comingSoon": "This screen is coming next", "retry": "Try again" }
+  "tabs": {
+    "home": "Home",
+    "menu": "Menu",
+    "favourites": "Favourites",
+    "info": "Info"
+  },
+  "home": {
+    "welcome": "Welcome to",
+    "search": "Search dishes, drinks…",
+    "explore": "Explore the menu",
+    "seeAll": "See all",
+    "chefsPick": "CHEF'S PICK",
+    "viewDish": "View dish"
+  },
+  "waiter": {
+    "call": "Call waiter",
+    "title": "How can we help?",
+    "bill": "Bring the bill",
+    "water": "Water, please",
+    "clean": "Clean the table",
+    "note": "Add a note (optional)",
+    "send": "Send request",
+    "onTheWay": "Waiter is on the way"
+  },
+  "order": {
+    "title": "My order",
+    "clear": "Clear",
+    "addMore": "Add more dishes",
+    "subtotal": "Subtotal",
+    "service": "Service (10%)",
+    "total": "Total",
+    "showWaiter": "Show to waiter",
+    "noPayment": "No payment in the app. Your waiter confirms the order.",
+    "add": "Add to order"
+  },
+  "favourites": {
+    "title": "Favourites",
+    "edit": "Edit",
+    "tip": "Show this list to your waiter to order faster."
+  },
+  "auth": {
+    "welcomeBack": "Welcome back",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "createAccount": "Create account",
+    "guest": "Continue as guest",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name",
+    "phone": "Phone number",
+    "forgot": "Forgot password?",
+    "remember": "Remember me"
+  },
+  "appearance": {
+    "title": "Appearance",
+    "subtitle": "Choose how the menu looks",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "systemHint": "System follows your phone's dark mode setting.",
+    "done": "Done"
+  },
+  "category": {
+    "all": "All",
+    "dishCount_one": "{{count}} dish",
+    "dishCount_other": "{{count}} dishes",
+    "empty": "No dishes here yet",
+    "minutes": "{{count}} min",
+    "viewOrder": "View order",
+    "addFavourite": "Add to favourites",
+    "removeFavourite": "Remove from favourites"
+  },
+  "common": {
+    "comingSoon": "This screen is coming next",
+    "retry": "Try again",
+    "back": "Back",
+    "search": "Search"
+  },
+  "dish": {
+    "about": "About this dish",
+    "ingredients": "Ingredients",
+    "chefsPick": "Chef's pick",
+    "spicy": "Mildly spicy",
+    "vegetarian": "Vegetarian",
+    "reviews": "({{count}})",
+    "calories": "{{count}} kcal",
+    "contains": "Contains {{list}}",
+    "avoidHint": "You asked to avoid {{list}}. Ask your waiter for an alternative.",
+    "addToOrder": "Add to order · {{price}}",
+    "added": "Added to your order",
+    "notFound": "Dish not found"
+  }
 }

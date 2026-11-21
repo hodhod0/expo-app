@@ -1,10 +1,98 @@
 {
-  "tabs": { "home": "الرئيسية", "menu": "القائمة", "favourites": "المفضلة", "info": "معلومات" },
-  "home": { "welcome": "أهلاً بك في", "search": "ابحث عن طبق أو مشروب…", "explore": "تصفّح القائمة", "seeAll": "عرض الكل", "chefsPick": "اختيار الشيف", "viewDish": "عرض الطبق" },
-  "waiter": { "call": "نادِ النادل", "title": "كيف يمكننا مساعدتك؟", "bill": "أحضر الفاتورة", "water": "ماء من فضلك", "clean": "تنظيف الطاولة", "note": "أضف ملاحظة (اختياري)", "send": "إرسال الطلب", "onTheWay": "النادل في الطريق" },
-  "order": { "title": "طلبي", "clear": "مسح", "addMore": "أضف أطباقاً أخرى", "subtotal": "المجموع الفرعي", "service": "الخدمة (10%)", "total": "المجموع", "showWaiter": "اعرضه على النادل", "noPayment": "لا يوجد دفع في التطبيق. النادل يؤكد طلبك.", "add": "أضف إلى الطلب" },
-  "favourites": { "title": "المفضلة", "edit": "تعديل", "tip": "اعرض هذه القائمة على النادل لتطلب أسرع." },
-  "auth": { "welcomeBack": "مرحباً بعودتك", "signIn": "تسجيل الدخول", "signUp": "إنشاء حساب", "createAccount": "إنشاء حساب", "guest": "المتابعة كضيف", "email": "البريد الإلكتروني", "password": "كلمة المرور", "fullName": "الاسم الكامل", "phone": "رقم الهاتف", "forgot": "نسيت كلمة المرور؟", "remember": "تذكرني" },
-  "appearance": { "title": "المظهر", "subtitle": "اختر شكل القائمة", "light": "فاتح", "dark": "داكن", "system": "النظام", "systemHint": "يتبع إعداد الوضع الداكن في هاتفك.", "done": "تم" },
-  "common": { "comingSoon": "هذه الشاشة قادمة قريباً", "retry": "حاول مجدداً" }
+  "tabs": {
+    "home": "الرئيسية",
+    "menu": "القائمة",
+    "favourites": "المفضلة",
+    "info": "معلومات"
+  },
+  "home": {
+    "welcome": "أهلاً بك في",
+    "search": "ابحث عن طبق أو مشروب…",
+    "explore": "تصفّح القائمة",
+    "seeAll": "عرض الكل",
+    "chefsPick": "اختيار الشيف",
+    "viewDish": "عرض الطبق"
+  },
+  "waiter": {
+    "call": "نادِ النادل",
+    "title": "كيف يمكننا مساعدتك؟",
+    "bill": "أحضر الفاتورة",
+    "water": "ماء من فضلك",
+    "clean": "تنظيف الطاولة",
+    "note": "أضف ملاحظة (اختياري)",
+    "send": "إرسال الطلب",
+    "onTheWay": "النادل في الطريق"
+  },
+  "order": {
+    "title": "طلبي",
+    "clear": "مسح",
+    "addMore": "أضف أطباقاً أخرى",
+    "subtotal": "المجموع الفرعي",
+    "service": "الخدمة (10%)",
+    "total": "المجموع",
+    "showWaiter": "اعرضه على النادل",
+    "noPayment": "لا يوجد دفع في التطبيق. النادل يؤكد طلبك.",
+    "add": "أضف إلى الطلب"
+  },
+  "favourites": {
+    "title": "المفضلة",
+    "edit": "تعديل",
+    "tip": "اعرض هذه القائمة على النادل لتطلب أسرع."
+  },
+  "auth": {
+    "welcomeBack": "مرحباً بعودتك",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "createAccount": "إنشاء حساب",
+    "guest": "المتابعة كضيف",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "fullName": "الاسم الكامل",
+    "phone": "رقم الهاتف",
+    "forgot": "نسيت كلمة المرور؟",
+    "remember": "تذكرني"
+  },
+  "appearance": {
+    "title": "المظهر",
+    "subtitle": "اختر شكل القائمة",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام",
+    "systemHint": "يتبع إعداد الوضع الداكن في هاتفك.",
+    "done": "تم"
+  },
+  "category": {
+    "all": "الكل",
+    "dishCount_zero": "لا أطباق",
+    "dishCount_one": "طبق واحد",
+    "dishCount_two": "طبقان",
+    "dishCount_few": "{{count}} أطباق",
+    "dishCount_many": "{{count}} طبقاً",
+    "dishCount_other": "{{count}} طبق",
+    "empty": "لا توجد أطباق هنا بعد",
+    "minutes": "{{count}} د",
+    "viewOrder": "عرض الطلب",
+    "addFavourite": "أضف إلى المفضلة",
+    "removeFavourite": "أزل من المفضلة"
+  },
+  "common": {
+    "comingSoon": "هذه الشاشة قادمة قريباً",
+    "retry": "حاول مجدداً",
+    "back": "رجوع",
+    "search": "بحث"
+  },
+  "dish": {
+    "about": "عن هذا الطبق",
+    "ingredients": "المكوّنات",
+    "chefsPick": "اختيار الشيف",
+    "spicy": "حار قليلاً",
+    "vegetarian": "نباتي",
+    "reviews": "({{count}})",
+    "calories": "{{count}} سعرة",
+    "contains": "يحتوي على {{list}}",
+    "avoidHint": "طلبت تجنّب {{list}}. اسأل النادل عن بديل.",
+    "addToOrder": "أضف إلى الطلب · {{price}}",
+    "added": "أُضيف إلى طلبك",
+    "notFound": "الطبق غير موجود"
+  }
 }
